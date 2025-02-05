@@ -9,8 +9,6 @@ import { FaPlus } from "react-icons/fa";
 function App() {
   const {
     todos,
-    todosCount,
-    pendingTodosCount,
     pendingTodoList,
     doneTodoList,
     handleNewTodo,
@@ -19,6 +17,7 @@ function App() {
     handleUpdateTodo,
   } = useTodo();
 
+  const [todoEditItem, setTodoEditItem] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("all");
 
@@ -37,7 +36,7 @@ function App() {
             <option value="done">Terminadas</option>
           </select>
 
-          <button className="btn-edit" onClick={() => setShowModal(true)}>
+          <button className="btn-edit" onClick={() => { setShowModal(true); setTodoEditItem(undefined);}}>
             <FaPlus />
           </button>
         </div>
@@ -46,8 +45,10 @@ function App() {
           {showModal &&
             createPortal(
               <TodoAdd
+              item={todoEditItem}
                 onClose={() => setShowModal(false)}
                 handleNewTodo={handleNewTodo}
+                handleUpdateTodo={handleUpdateTodo}
               />,
               document.body
             )}
@@ -56,27 +57,33 @@ function App() {
         {selectedStatus === "all" && (
           <TodoList
             todos={todos}
+            handleNewTodo={handleNewTodo}
             handleUpdateTodo={handleUpdateTodo}
             handleDeleteTodo={handleDeleteTodo}
             handleCompleteTodo={handleCompleteTodo}
+            onShowEditModal={(editItem) => {setShowModal(true); setTodoEditItem(editItem);}}
           />
         )}
 
         {selectedStatus === "pending" && (
           <TodoList
             todos={pendingTodoList}
+            handleNewTodo={handleNewTodo}
             handleUpdateTodo={handleUpdateTodo}
             handleDeleteTodo={handleDeleteTodo}
             handleCompleteTodo={handleCompleteTodo}
+            onShowEditModal={(editItem) => {setShowModal(true); setTodoEditItem(editItem);}}
           />
         )}
 
         {selectedStatus === "done" && (
           <TodoList
             todos={doneTodoList}
+            handleNewTodo={handleNewTodo}
             handleUpdateTodo={handleUpdateTodo}
             handleDeleteTodo={handleDeleteTodo}
             handleCompleteTodo={handleCompleteTodo}
+            onShowEditModal={(editItem) => {setShowModal(true); setTodoEditItem(editItem);}}
           />
         )}
       </div>

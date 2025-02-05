@@ -3,9 +3,11 @@ import { TodoItem } from './TodoItem';
 
 export const TodoList = ({
 	todos,
+	handleNewTodo,
 	handleUpdateTodo,
 	handleDeleteTodo,
 	handleCompleteTodo,
+	onShowEditModal
 }) => {
 	return (
 		<ul>
@@ -13,9 +15,11 @@ export const TodoList = ({
 				<TodoItem
 					key={todo.id}
 					todo={todo}
+					handleNewTodo={handleNewTodo}
 					handleUpdateTodo={handleUpdateTodo}
 					handleDeleteTodo={handleDeleteTodo}
 					handleCompleteTodo={handleCompleteTodo}
+					onShowEditModal={onShowEditModal}
 				/>
 			))}
 		</ul>
